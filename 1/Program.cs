@@ -4,12 +4,12 @@
         int[] board = {1, 2, 3, 4, 5, 6, 7, 8, 9};
 void BoardOutput() 
     {
-        Console.WriteLine(new string('_' , 3 * boardSize));
+        Console.WriteLine(new string('_' , 4 * boardSize) + '_');
         for (int i =0; i <boardSize; i++) 
         {
-            Console.WriteLine(new string(' ' , 3) + '|' + new string(' ' , 3) + '|' + new string(' ' , 3));
-            Console.WriteLine(' ' + board[i * 3]+ " | " + board[1 + i * 3] + "|"+ board[2 + i * 3] + " |");
-            Console.WriteLine(new string('_' , 3) + '_' + new string('_' , 3) + '_' + new string('_' , 3));
+            Console.WriteLine('|' + new string(' ' , 3) + '|' + new string(' ' , 3) + '|' + new string(' ' ,3) + '|');
+            Console.WriteLine("|" + ' ' + board[0 + i * 3] + " | "   + board[1 + i * 3] + " | "+ board[2 + i * 3] + " |");
+            Console.WriteLine('|' + new string('_' , 3) + '|' + new string('_' , 3) + '|' + new string('_' , 3) + '|');
         }
     }
 BoardOutput();
