@@ -12,82 +12,65 @@ void BoardOutput()
             Console.WriteLine('|' + new string('_' , 3) + '|' + new string('_' , 3) + '|' + new string('_' , 3) + '|');
         }
     }
-BoardOutput();
 
+int WinningCombination()
+{
+    int winning = 0;
+    int[][] winning_combination = new int[][] 
+    {
+        new int[] {0,1,2}, new int[] {3,4,5}, new int[] {6,7,8}, // горизонтальные линии
+        new int[] {0,3,6}, new int[] {1,4,7}, new int[] {2,5,8}, // вертикальные линии
+        new int[] {0,4,8}, new int[] {2,4,6} // наискосяк
+    };
+    foreach (int[] pos in winning_combination)
+    {
+        if (board[pos[0]] == board[pos[1]] && board[pos[1]] == board[pos[2]] && (board[pos[1]] == 'X' || board[pos[1]] == 'O'))
+        {
+            winning = board[pos[0]];
+        }
+    }
+    return winning;
+}
 
-//string[,] array = new string[3, 3] { { "1", "2", "3" }, { "4", "5", "6" }, { "7", "8", "9" } };
+bool move(int index, char c)
+{
+    if (index > 10 ||index < 1 || board[index-1] == 'X' || board[index-1] == 'O')
+    {
+        return false;
+    }
+    board[index-1] = c;
+    return true;
+}
 
-//void PrintArray(string[,] array)
-//{
- //   for(int i = 0; i < array.GetLength(0); i++)
-  //  {
-  //      for(int j = 0; j < array.GetLength(1); j++)
- //       {
- //       Console.Write(string.Format("{0, 4}", array[i, j] + " |" ));
- //       }
- //       Console.WriteLine();
-  //  }
-//}
+void start_game()
+{
+    int step = 0;
+    int win = 0;
+    char[] players = {'X', 'O'};
+    while (step < 9 && win == 0)
+    {
+        BoardOutput();
+        Console.WriteLine("Игрок " + players[step % 2] + " ход:");
+        int index = Convert.ToInt32(Console.ReadLine());
+        if (move(index, players[step % 2]))
+        {
+            win = WinningCombination();
+            step++;
+        }
+        else
+        {
+            Console.WriteLine("Неверный ход, повторите попытку.");
+        }
+    }
+    BoardOutput();
+    if (win != 0)
+    {
+        Console.WriteLine("Игрок " + win + " выиграл!");
+    }
+    else
+    {
+        Console.WriteLine("Ничья!");
+    }
+}
 
-//PrintArray(array);
-//Console.Write("Введите имя игрока №1 ");
-//string username1 = Console.ReadLine();
-
-//Console.Write("Введите имя игрока №2 ");
-//string username2 = Console.ReadLine();
-
-//Console.Write("Игрок ");
-//Console.WriteLine(username1);
-//Console.Write(" выберете число, чтобы поставть Х: ");
-//int move = Convert.ToInt32(Console.ReadLine());
-
-//if (move > 0 && move <= 9)
-  //  if (move == 1)
-  //  array [0, 0] = "x";
-  //  if (move == 2)
-  //  array [0, 1] = "x";
-   // if (move == 3)
-    //array [0, 2] = "x";
-    //if (move == 4)
-    //array [1, 0] = "x";
-    //if (move == 5)
-   // array [1, 1] = "x";
-   // if (move == 6)
-   // array [1, 2] = "x";
-   // if (move == 7)
-   // array [2, 0] = "x";
-   // if (move == 8)
-    //array [2, 1] = "x";
-    //if (move == 9)
-   // array [2, 2] = "x";
-//else Console.WriteLine("введено не верное число для хода");
-
-
-//PrintArray(array);
-
-//Console.Write("ход игрока ");
-//Console.WriteLine(username2);
-//Console.Write(" выберете число, чтобы поставть Х: ");
-//int move2 = Convert.ToInt32(Console.ReadLine());
-//if (move2 > 0 && move <= 9)
-  //  if (move2 == 1)
-  //  array [0, 0] = "O";
-  //  if (move2 == 2)
-  //  array [0, 1] = "O";
-  //  if (move2 == 3)
-  //  array [0, 2] = "O";
-  //  if (move2 == 4)
-  //  array [1, 0] = "O";
-  //  if (move2 == 5)
-  //  array [1, 1] = "O";
-  //  if (move2 == 6)
-  //  array [1, 2] = "O";
-  //  if (move2 == 7)
-   // array [2, 0] = "O";
-  //  if (move2 == 8)
-  //  array [2, 1] = "O";
-  //  if (move2 == 9)
-  //  array [2, 2] = "O";
-//else Console.WriteLine("введено не верное число для хода");
-//PrintArray(array);
-
+start_game();
